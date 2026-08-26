@@ -1041,4 +1041,4 @@ renderer-specific.
 
 ## Licence
 
-MIT © 2026 Alex
+MIT © 2026 idlee.xyz
