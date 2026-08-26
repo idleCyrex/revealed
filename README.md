@@ -2,6 +2,8 @@
 
 **Paint one image out of another.** A wet-edge WebGL reveal for React and plain JS.
 
+![A scripted pointer sweep tears a photograph of a pigeon open along a wet, noise-carved edge, uncovering an X-ray of the same bird; the tear keeps travelling for about a second after the stroke stops, leaves islands of feather standing inside the uncovered ground, and then the photograph heals back over it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/hero.gif)
+
 Two pictures are stacked in the same box. Wherever the pointer moves, the top one is eaten
 away and the one underneath shows through — like wiping condensation off a window, except
 the boundary is a fractal lace that bulges, drips and punches holes through itself. A
@@ -115,6 +117,8 @@ jsDelivr serves the same file from
 | `front` | yes | the image on top — the one that gets eaten away |
 | `back` | yes | the image underneath — the one that gets revealed |
 | `skeleton` | no | line art of `back`, ghosted onto `front` and sketched on in a loop, so the visitor can tell there is something hidden underneath. Either an image, or a [3D wireframe mesh](#3d-wireframe-skeletons) |
+
+![The three layers side by side. front: a photograph of a beige CRT monitor showing a 1990s MapQuest page. back: a flat-panel monitor showing a modern cruise-line site. skeleton: white line art tracing the outline of the flat monitor and its stand.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/layers.png)
 
 `front` and `back` should be the **same size and the same framing**. The shader maps both
 onto the same quad and the plates are `object-fit: fill`, so anything that does not line up
@@ -486,6 +490,8 @@ export function Dissolving() {
 | `shatter` | sharp angular tears, low-poly edge | `scale: 12, carve: 1.1, detail: 0.05, feather: 0.004, refraction: 0, bubble: 0.3, facet: 1` | on |
 | `clean` | no noise, no holes, plain soft circle | `carve: 0, detail: 0, feather: 0.02, refraction: 0, bubble: 0, facet: 0` | off |
 
+![The same stroke on the same frame, rendered six times — edge="liquid", "plain", "dissolve", "ink", "shatter" and "clean" — each labelled, so the carved boundary can be compared from a torn lace, through a quiet curve, to a fine speckled crumble.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/presets.png)
+
 ### Getting the old look back
 
 `edge: "plain"` is the pre-wave library in one word — the old `carve` and `refraction`, no
@@ -579,6 +585,8 @@ where it threw the reveal, and that is final until `clear()`.
 `persist` is `healRate: 0` and nothing ever heals, `spotlight` is `healRate: Infinity` and
 *everything* heals every frame — so the reveal is only ever exactly where the pointer is
 right now, and closes immediately behind it.
+
+![Two copies of the same tree painted with the same stroke. On the left the default brush leaves a trail of bare winter branches that heals over behind the pointer. On the right, brush.spotlight keeps the reveal only under the pointer, closing immediately behind it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/spotlight.gif)
 
 ```tsx
 import { Revealed } from "revealed/react";
