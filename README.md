@@ -2,7 +2,7 @@
 
 **Paint one image out of another.** A wet-edge WebGL reveal for React and plain JS.
 
-![A scripted pointer sweep tears a photograph of a beige 1990s CRT monitor open along a wet, noise-carved edge, uncovering the flat-panel monitor hidden underneath it; a faint blue outline of that flat panel hangs over the CRT and is wiped away exactly where the reveal has already passed, the tear spills out past the edge of the CRT and keeps travelling for about a second after the stroke stops, leaves islands of the 1997 page standing inside the uncovered ground, and then the CRT heals back over all of it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/hero.gif)
+![A scripted pointer sweep tears a photograph of a beige 1990s CRT monitor open along a wet, noise-carved edge, uncovering the flat-panel monitor hidden underneath it; a faint grey outline of that flat panel hangs over the CRT and is wiped away exactly where the reveal has already passed, the tear spills out past the edge of the CRT and keeps travelling for about a second after the stroke stops, leaves islands of the 1997 page standing inside the uncovered ground, and then the CRT heals back over all of it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/hero.gif)
 
 Two pictures are stacked in the same box. Wherever the pointer moves, the top one is eaten
 away and the one underneath shows through - like wiping condensation off a window, except
