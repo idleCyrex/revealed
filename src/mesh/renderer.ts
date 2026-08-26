@@ -1,5 +1,5 @@
 /* The wireframe pass. Renders an edge list into an offscreen RGBA8 texture
-   that the display pass binds as `uSkel` — so the display shader is unchanged,
+   that the display pass binds as `uSkel` - so the display shader is unchanged,
    the skeleton is still stamped onto the front plate before the reveal mix, and
    `draw`/`hold`/`pulse`/`reactive` all keep working on the sampled texture.
 
@@ -75,7 +75,7 @@ void main(){
 `;
 }
 
-/* Alpha only, premultiplied black — so the target is valid for the display
+/* Alpha only, premultiplied black - so the target is valid for the display
    pass's "alpha" branch (which reads `.a` and tints with `uSkelColor`) and also
    for "image" (which expects premultiplied rgb). `uScan` is (bands, phase,
    amount); phase is wrapped on the CPU so no unbounded time reaches a mediump
@@ -209,7 +209,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
   }
 
   /** Hand the pass a parsed mesh. `null` releases it and leaves a transparent
-   *  target — which is exactly the failure story: inert, not absent. */
+   *  target - which is exactly the failure story: inert, not absent. */
   setMesh(data: MeshData | null): void {
     this.data = data;
     this.needs = true;
@@ -266,7 +266,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
     const py = pointer ? clamp(pointer.y, -1, 1) : 0;
     this.targetYaw = px * this.o.meshParallax * rad;
     /* pointer y is y-DOWN, so a downward pointer pitches the model's top
-       toward the viewer — the same sign the reference produces from its y-up
+       toward the viewer - the same sign the reference produces from its y-up
        normalised mouse times -1 */
     this.targetPitch = tilt + py * this.o.meshParallax * 0.6 * rad;
 
@@ -440,7 +440,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
     this.ibo = null;
     this.indexCount = 0;
     /* a mesh that arrives while the context is down is kept in `data` and
-       uploaded by the host's next `create()` — never dropped */
+       uploaded by the host's next `create()` - never dropped */
     if (this.lost || gl.isContextLost()) return;
     const d = this.data;
     if (!d || d.edges.length < 2) return;
@@ -514,7 +514,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
     this.needs = true;
   }
 
-  /** RGBA8 colour target at the skeleton resolution, plus — only if asked — a
+  /** RGBA8 colour target at the skeleton resolution, plus - only if asked - a
    *  depth renderbuffer on OUR framebuffer, which is why the host context's
    *  `depth: false` never matters here.
    *
@@ -615,7 +615,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
 
   /** No framebuffer: leave the texture as one transparent texel and never draw.
    *  The host binds `uSkel` before the mesh has loaded, and an INCOMPLETE
-   *  texture samples as opaque BLACK in WebGL1 — i.e. a full-plate black stamp.
+   *  texture samples as opaque BLACK in WebGL1 - i.e. a full-plate black stamp.
    *  This is the difference between "no skeleton" and "the plate went dark". */
   private inertTexture(prevTex: WebGLTexture | null): boolean {
     const gl = this.gl;
@@ -638,7 +638,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
     return true;
   }
 
-  /** True when the objects we hold no longer belong to the live context — i.e.
+  /** True when the objects we hold no longer belong to the live context - i.e.
    *  the context was lost, and possibly already restored under us. Deleting one
    *  of them then raises INVALID_OPERATION, which would surface in the host's
    *  error log as a driver-level fault on every context restore. They are
@@ -737,7 +737,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
   /* Every piece of GL state this pass touches is saved and restored, so the
      host can call render() anywhere in its frame without rebinding. That is
      ~14 `getParameter` calls, all of which are client-side cached in every
-     browser's command buffer — call it a couple of microseconds. If a host
+     browser's command buffer - call it a couple of microseconds. If a host
      rebinds its own state after the mesh pass anyway, this is pure waste, but
      it is the difference between "drop the call in" and "audit the core". */
   private save(gl: WebGLRenderingContext): GlState {
@@ -864,7 +864,7 @@ export class MeshWireframe implements MeshSkeletonHandle {
 
   /** Watch the host's canvas so `render()` becomes a no-op the instant the
    *  context goes, and stays one until the host calls `create()` again. We do
-   *  not preventDefault and do not request a restore — that is the host's
+   *  not preventDefault and do not request a restore - that is the host's
    *  decision about its own canvas, not a decorative skeleton's. */
   private watchContext(gl: WebGLRenderingContext): void {
     const c = gl.canvas as HTMLCanvasElement | OffscreenCanvas | null;

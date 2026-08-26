@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for the suggestion. Note that `packages/revealed` must stay
-        at zero runtime dependencies — requests that require adding one are
+        at zero runtime dependencies - requests that require adding one are
         unlikely to be accepted as-is, but the underlying need is still
         worth describing.
 
@@ -24,7 +24,7 @@ body:
     attributes:
       label: Proposed solution
       description: >
-        What you'd like to see — a new option, a new preset, a new API
+        What you'd like to see - a new option, a new preset, a new API
         method, docs, etc. Sketch the shape of it if you can (e.g. a new
         field on EdgeOptions/BrushOptions/SkeletonOptions/IdleOptions).
       render: ts

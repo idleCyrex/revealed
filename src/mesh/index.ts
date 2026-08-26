@@ -1,4 +1,4 @@
-/* `revealed/mesh` — the 3D wireframe skeleton.
+/* `revealed/mesh` - the 3D wireframe skeleton.
  *
  * A subpath entry, not part of the core bundle: a couple of KB gzipped is the
  * wrong tax to put on every consumer for a feature that needs a 3D model most
@@ -27,7 +27,7 @@ import { MeshWireframe } from "./renderer.js";
 import type { MeshSkeletonHandle, MeshSkeletonOptions } from "./types.js";
 
 /** Create a mesh skeleton. The fetch starts immediately and is never awaited:
- *  nothing downstream — not `create`, not `render`, not the host's `onReady` —
+ *  nothing downstream - not `create`, not `render`, not the host's `onReady` -
  *  blocks on it, and a mesh that 404s, fails to parse, or exceeds the index
  *  limit reports through `onError` and leaves a transparent skeleton texture.
  *  The reveal must never be held up by a decorative asset. */

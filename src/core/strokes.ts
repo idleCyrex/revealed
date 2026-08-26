@@ -3,7 +3,7 @@ import type { UvRect } from "./types.js";
 
 /* The autopilot: strokes that sweep the plate when nobody is pointing at it, so
    the effect demonstrates itself instead of sitting there looking like a static
-   image. One generator per field — two fields on a page get independent
+   image. One generator per field - two fields on a page get independent
    rhythms rather than the same gesture twice.
 
    Everything is in PLATE uv (0..1 across the image, y down). A stroke is born
@@ -87,9 +87,9 @@ const SPAWN_CHANCE = [1, 0.8, 0.5, 0.2];
 /* A pointer report is an activity PING, not a sticky flag: it expires this many
    SAMPLED seconds after the last report. pointermove fires at least once per
    frame while the cursor moves at all, so this is far longer than any gap in a
-   real drag. What it covers is every path where pointerleave never fires — a
+   real drag. What it covers is every path where pointerleave never fires - a
    tab swap with the cursor at rest on the image, an exit through the browser
-   chrome, a listener that missed the event — each of which would otherwise park
+   chrome, a listener that missed the event - each of which would otherwise park
    the autopilot permanently. */
 const PTR_TIMEOUT = 0.6;
 /* nearly one gap in five is a genuine rest, so the field does empty out and the
@@ -195,7 +195,7 @@ export class IdleStrokes {
       const dt = Math.min((now - this.lastT) / 1000, 1 / 30);
       this.lastT = now;
       /* the takeover expires on the same clamped, sampled clock the strokes
-         move on — never wall clock and never a frame count */
+         move on - never wall clock and never a frame count */
       if (this.ptr > 0) this.ptr = Math.max(0, this.ptr - dt);
       if (this.armed && this.opts.enabled) this.advance(dt);
     }

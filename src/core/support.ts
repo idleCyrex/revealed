@@ -31,7 +31,7 @@ export function hardwareGL(): boolean {
 /**
  * Whether `RevealField` will run its WebGL effect in this environment.
  * False on the server, without hardware WebGL, and under
- * `prefers-reduced-motion: reduce` — in every one of those cases the field
+ * `prefers-reduced-motion: reduce` - in every one of those cases the field
  * still renders its static front plate.
  */
 export function isSupported(): boolean {

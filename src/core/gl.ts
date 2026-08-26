@@ -69,7 +69,7 @@ export function createFullscreenTriangle(
   return buf;
 }
 
-/** Cross-origin images have to opt into CORS before WebGL will sample them —
+/** Cross-origin images have to opt into CORS before WebGL will sample them -
  *  and one tainted texture poisons the whole context, which would also break
  *  the reduce pass's readPixels. Same-origin urls are left alone, because
  *  requesting CORS from a host that does not send the header fails the load. */

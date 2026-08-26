@@ -9,7 +9,7 @@ import { PRECISION } from "./vertex.js";
      encoded = 128/255 + v * 0.5      v = (encoded - 128/255) * 2
 
    which is the only reason the pass touches anything but R, and is exactly what
-   the two spare channels are for — no second target, no float texture. A mask
+   the two spare channels are for - no second target, no float texture. A mask
    whose G/B are ZERO reads as velocity (-1, -1) and the field leaves the plate
    on the first frame, so every fill site (createMaskPair, fillMaskPair, clear(),
    revealAll(), context restore) must write 128, not 0.
@@ -35,7 +35,7 @@ import { PRECISION } from "./vertex.js";
    EXACTNESS. The old pass was a pure `max` under `brush.persist` and left
    painted texels bit-identical frame after frame, which is why a long session
    could not band. That still holds here. Only two things ever write R: `max`
-   of taps of the previous frame, and `- uDecay`, which is whole 1/255 steps —
+   of taps of the previous frame, and `- uDecay`, which is whole 1/255 steps -
    so no value is ever re-quantised in place, whatever the velocity field is
    doing. And the velocity is strictly contracted every frame (damped, then
    snapped to exactly zero once it is inside one encoding step), so the field
@@ -46,7 +46,7 @@ import { PRECISION } from "./vertex.js";
    SPOTLIGHT is the other end of the same one number: `healRate: Infinity` owes
    a whole mask unit of decay every frame, so nothing from the previous mask can
    survive and the pass skips the feedback fetch outright and reduces to the
-   brush alone. No branch anywhere else in the library — it is what the existing
+   brush alone. No branch anywhere else in the library - it is what the existing
    decay arithmetic already does at its limit.
 
    MULTI-CAPSULE. runMaskPasses draws one pass per capsule. Advection, decay,
@@ -82,7 +82,7 @@ const float VLSB = 0.007843137;
 const float VMAX = 0.8;
 /* mask value the spread gives up per texel it travels. three whole 1/255 steps:
    large enough that quantisation can never round it to nothing, which is what
-   makes the creep terminate — from a peak of 1 it can reach at most 85 texels,
+   makes the creep terminate - from a peak of 1 it can reach at most 85 texels,
    whatever the rate, whatever the frame rate, forever. */
 const float SPREAD_DROP = 0.011764706;
 
@@ -98,11 +98,11 @@ void main() {
   float field = 0.0;
   vec2 vel = vec2(0.0);
 
-  /* uDecay >= 1 is healRate Infinity — brush.spotlight. A whole mask unit of
+  /* uDecay >= 1 is healRate Infinity - brush.spotlight. A whole mask unit of
      decay in one frame means NOTHING from the previous mask can survive, so the
      entire feedback half of the pass is skipped: no fetch, no back-trace, no
      spread. What is left is the brush on its own, which is exactly the mode's
-     definition — the reveal is only where the pointer is right now. (Passes
+     definition - the reveal is only where the pointer is right now. (Passes
      after the first still take this branch with uDecay 0, so several capsules
      in one frame still union correctly.) */
   if (uDecay < 1.0) {
@@ -120,22 +120,22 @@ void main() {
       /* uvFlip.y runs the other way from plate uv, hence the + on y */
       src = vec2(uvFlip.x - off.x, uvFlip.y + off.y);
       vec4 back = texture2D(uPrev, src);
-      /* the VELOCITY is transported — it is the thing with momentum, it has to
-         leave where it was — but the REVEAL is DILATED: the max of where it is and
+      /* the VELOCITY is transported - it is the thing with momentum, it has to
+         leave where it was - but the REVEAL is DILATED: the max of where it is and
          where it came from, rather than replaced by it.
 
          Replacing is the textbook advection and it is wrong here. Each frame's
          back-trace lands off-texel-centre, so a plain replace is a bilinear tap,
          i.e. one box blur per frame; the reveal is thresholded, so a hundred
-         frames of that dissolve it — measured, 72% of the area gone in 2 s with
+         frames of that dissolve it - measured, 72% of the area gone in 2 s with
          healing switched off entirely, which reads as the stroke evaporating
          rather than travelling. Dilating instead makes advection strictly
          additive: the reveal grows along the flow and nothing but uDecay ever
          takes it away, so trail still means what it says. The front still stops
-         — it can only reach as far as the velocity carries it before damping
-         snaps that to zero — which is what keeps persist finite. */
+         - it can only reach as far as the velocity carries it before damping
+         snaps that to zero - which is what keeps persist finite. */
       /* the mask clamps to its edge, so a back-trace that leaves the plate reads
-         the border texel — and under a dilation that border feeds itself and the
+         the border texel - and under a dilation that border feeds itself and the
          wave pins to the frame and creeps along it forever. Outside the plate
          there is nothing to have come from, so the dilation simply does not
          apply; the velocity still transports, which is what lets a wave leave. */
@@ -146,9 +146,9 @@ void main() {
     }
 
     /* the reveal creeps into its neighbours: four taps of R around the same spot
-       the back-trace landed on. Bounded twice over — it can never lift a texel
+       the back-trace landed on. Bounded twice over - it can never lift a texel
        above its neighbourhood max minus SPREAD_DROP, and it climbs there by at
-       most uSpread of the way per frame — so it is a travelling front with a
+       most uSpread of the way per frame - so it is a travelling front with a
        finite range, not a diffusion that can eat the plate. */
     if (uSpread > 0.0) {
       float mx = field;
@@ -174,7 +174,7 @@ void main() {
   float brush = (1.0 - smoothstep(0.0, max(uR, 0.001), d)) * uAmp;
 
   vel *= uDamp;
-  /* a degenerate capsule — a held pointer, or an idle stroke standing still —
+  /* a degenerate capsule - a held pointer, or an idle stroke standing still -
      has no direction to throw anything in, so it injects nothing */
   if (uInject > 0.0 && len2 > SEG_EPS) {
     vec2 dir = ab * inversesqrt(len2);
@@ -184,8 +184,8 @@ void main() {
        from; with swirl at 0 the wave is just a smear. */
     vec2 rel = p - uSeg.xy;
     /* the sign RAMPS across the axis rather than flipping. A hard flip is a
-       velocity discontinuity one texel wide — infinite shear at the mask's
-       resolution — and it shreds the reveal in a few frames instead of curling
+       velocity discontinuity one texel wide - infinite shear at the mask's
+       resolution - and it shreds the reveal in a few frames instead of curling
        it. Ramped over half the brush radius it is a real dipole: no rotation
        on the axis, full rotation out at the rim, and the pair is what the
        vortex-core holes come from. */
@@ -198,7 +198,7 @@ void main() {
        velocity, so its front and its momentum are the same contour. Here they
        are different channels: the reveal's front sits out where the brush
        profile has fallen to the cut threshold, and a squared falloff leaves
-       exactly that ring at zero speed — the stroke then churns its own inside
+       exactly that ring at zero speed - the stroke then churns its own inside
        and never advances, which is what it measurably did. A plateau across
        the disc, rolled off over its outer half, carries the front with it. */
     float vfall = 1.0 - smoothstep(0.5, 1.0, d / max(uR, 0.001));

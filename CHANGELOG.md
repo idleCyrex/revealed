@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.1.0 — Initial release
+## 0.1.0 - Initial release
 
 ### Added
 
-- `RevealField` — the vanilla WebGL engine. Injects its own `<canvas>` plus
+- `RevealField` - the vanilla WebGL engine. Injects its own `<canvas>` plus
   the `front`/`back` `<img>` plates behind it, so a correct static image is
   always on screen even before (or without) GL.
 - `<Revealed />` React component and `useRevealed()` hook (`revealed/react`
@@ -35,10 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pause off-screen, `visibilitychange` pause on hidden tabs,
   `prefers-reduced-motion: reduce` support (re-checked live), software
   renderer (SwiftShader/llvmpipe) refusal, and automatic recovery from
-  WebGL context loss — all falling back to the static plates.
+  WebGL context loss - all falling back to the static plates.
 - `isSupported()` and cached, SSR-safe hardware-GL detection.
 - Narrow-viewport image swapping via `{ src, small, smallMaxWidth }` sources.
-- Full cleanup via `destroy()` — textures, FBOs, programs, buffers,
+- Full cleanup via `destroy()` - textures, FBOs, programs, buffers,
   observers, listeners, and the render loop are all freed.
 - ESM + CJS + `.d.ts` builds for both entry points, plus a minified IIFE
   (`revealed.global.js`) for CDN/`<script>` use via `window.revealed`.

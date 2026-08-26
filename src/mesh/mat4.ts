@@ -1,4 +1,4 @@
-/* Minimal 4x4 column-major matrix helpers — exactly what a wireframe pass
+/* Minimal 4x4 column-major matrix helpers - exactly what a wireframe pass
    needs and nothing more: one perspective, one Y-then-X rotation with a Z
    pushback, one multiply. No inverse, no lookAt, no quaternions, no gl-matrix.
    Adding any of those is the first step toward writing a bad three.js. */

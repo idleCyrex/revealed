@@ -21,7 +21,7 @@ export interface RevealHandle {
   paint: (x: number, y: number, strength?: number) => void;
   /** wipe the mask back to fully covered */
   clear: () => void;
-  /** flood the mask — `back` fully visible */
+  /** flood the mask - `back` fully visible */
   revealAll: () => void;
   play: () => void;
   pause: () => void;
@@ -32,7 +32,7 @@ export interface RevealHandle {
 export interface RevealedProps extends RevealOptions {
   className?: string;
   style?: CSSProperties;
-  /** rendered until the field has mounted — i.e. on the server and during the
+  /** rendered until the field has mounted - i.e. on the server and during the
    *  first client render. Once mounted the field's own plates take over, and
    *  they are what covers every degradation (no WebGL, reduced motion, a lost
    *  context) from then on. */
@@ -68,16 +68,16 @@ const OVERLAY: CSSProperties = { position: "absolute", inset: 0 };
  * binding can have; add new options to one of the lists as they are added to
  * `RevealOptions`, and keep the lists next to the code that implements them.
  *
- *  (b) CONSTRUCTION KEY — rebuilds the field, because a new image has to be
+ *  (b) CONSTRUCTION KEY - rebuilds the field, because a new image has to be
  *      decoded and uploaded:
- *        `front`, `back`, and the skeleton's IMAGE SOURCE — i.e. `skeleton`
+ *        `front`, `back`, and the skeleton's IMAGE SOURCE - i.e. `skeleton`
  *        when it is a string, or `skeleton.src`. Adding or removing the
  *        skeleton entirely is a source change too.
  *
- *  (c) REF-HELD, never a dependency — an inline arrow must not key anything:
+ *  (c) REF-HELD, never a dependency - an inline arrow must not key anything:
  *        `onReveal`, `onReady`, `onError`.
  *
- *  (a) FORWARDED LIVE through `setOptions` — everything else:
+ *  (a) FORWARDED LIVE through `setOptions` - everything else:
  *        `aspect`, `edge`, `brush`, `idle`, `maxDpr`, `running`, `progress`,
  *        `measure`, `pointerTarget`, `deferInit`, and every non-source field
  *        of `skeleton`: `color`, `opacity`, `mode`, `period`, `source`,
@@ -86,7 +86,7 @@ const OVERLAY: CSSProperties = { position: "absolute", inset: 0 };
  *      library baked into the shader; `setOptions` relinks the display program
  *      for them, still without touching the context. Everything else here is a
  *      uniform read on the next frame. `deferInit` is live but only decides
- *      how the NEXT GL bring-up is scheduled — it is a no-op while GL is up.
+ *      how the NEXT GL bring-up is scheduled - it is a no-op while GL is up.
  *
  * Object-valued options are compared by VALUE, not by identity: the inline
  * `edge={{ … }}` / `skeleton={{ … }}` literal every caller naturally writes
@@ -121,7 +121,7 @@ export function useRevealed(
 
   /* (b) the one construction effect. Keyed ONLY on the image identities: an
      option change must never remount GL. `options` deliberately does not
-     appear in the dependency list — the second effect below forwards it
+     appear in the dependency list - the second effect below forwards it
      instead. `skelSrcKey` is the skeleton's IMAGE only; the rest of the
      skeleton is live and belongs to the second effect. */
   const frontKey = srcKey(options.front);
@@ -152,7 +152,7 @@ export function useRevealed(
 
   /* (a) every other prop, forwarded live. The object-valued ones are keyed by
      value so an inline literal is only an update when something in it really
-     changed — the deps are these keys, never the objects themselves. */
+     changed - the deps are these keys, never the objects themselves. */
   const edgeKey = valueKey(options.edge);
   const brushKey = valueKey(options.brush);
   const idleKey = valueKey(options.idle);
@@ -178,7 +178,7 @@ export function useRevealed(
       deferInit: options.deferInit,
       /* the image is a construction key, so the only thing that can have
          changed here is the skeleton's colour, opacity, mode, period, source
-         or reactive — all of which `setOptions` applies without a rebuild.
+         or reactive - all of which `setOptions` applies without a rebuild.
          Passing the whole object is safe: `setOptions` compares the source by
          value and reloads no plate when it is the same image. */
       skeleton: options.skeleton,
@@ -253,7 +253,7 @@ function srcKey(src: ImageSource | null | undefined): string {
 }
 
 /** `{ src }` is both a valid `ImageSource` and a valid `SkeletonOptions`, and
- *  the two agree on what it means — only the ImageSource-only keys have to
+ *  the two agree on what it means - only the ImageSource-only keys have to
  *  discriminate. Mirrors `normalizeSkeleton` in core/options.ts. */
 function skeletonObject(sk: RevealOptions["skeleton"]): SkeletonOptions | null {
   if (!sk) return null;
@@ -262,7 +262,7 @@ function skeletonObject(sk: RevealOptions["skeleton"]): SkeletonOptions | null {
   return sk as SkeletonOptions;
 }
 
-/** The skeleton's IMAGE — the only part of `skeleton` that rebuilds the field,
+/** The skeleton's IMAGE - the only part of `skeleton` that rebuilds the field,
  *  because a new plate has to be decoded and uploaded. */
 function skeletonSrcKey(sk: RevealOptions["skeleton"]): string {
   const o = skeletonObject(sk);

@@ -62,7 +62,7 @@ an appointed representative at an online or offline event.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at:
 
-> **[TODO: enforcement contact — replace with a maintainer email or reporting link before this document is relied upon]**
+> **[TODO: enforcement contact - replace with a maintainer email or reporting link before this document is relied upon]**
 
 All complaints will be reviewed and investigated promptly and fairly.
 

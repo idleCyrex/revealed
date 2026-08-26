@@ -118,7 +118,7 @@ const float FIELD_K = 1.9;
    low-poly torn edge, straight segments about one mask texel long). It is the
    coordinate that blends, not two samples, so a fractional value is a real
    in-between rather than a cross-fade, and it needs no second texture and no
-   filter change — the refraction gradient below still reads a filtered mask. */
+   filter change - the refraction gradient below still reads a filtered mask. */
 float maskAt(vec2 uv){
   vec2 q = mix(uv, (floor(uv * uMaskPx) + 0.5) / uMaskPx, uBubble.z);
   return texture2D(uMask, vec2(q.x, 1.0 - q.y)).r;
@@ -158,7 +158,7 @@ void main() {
      contour generator: a single hill becomes that many nested closed level
      sets. Subtracting the bands from the field cuts along them, which punches
      concentric holes THROUGH healthy reveal and leaves islands of the front
-     plate standing inside it — and, where the reveal is thin, pinches specks
+     plate standing inside it - and, where the reveal is thin, pinches specks
      off it entirely. Two ALU on an fb we already sampled.
      Gated on cw, the mask's own health, for two reasons: a mask-driven reveal
      gets the holes, and a progress-driven one (where the mask is empty and the

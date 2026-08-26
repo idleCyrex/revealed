@@ -8,7 +8,7 @@
  *
  *  - positions: xyz triples in model space. Normalised to a unit box on load,
  *    so any scale works; pre-normalised data is unchanged by that pass.
- *  - edges: vertex-index pairs. Uint16 only — 65,535 vertices is far above the
+ *  - edges: vertex-index pairs. Uint16 only - 65,535 vertices is far above the
  *    visual budget for a wireframe, so `OES_element_index_uint` is never needed.
  */
 export type MeshSource =
@@ -47,7 +47,7 @@ export interface MeshSkeletonOptions {
    *  `gl.LINES`; > 1 builds an expanded-quad buffer at load time (4x vertices,
    *  1.5x indices, one extra attribute buffer). */
   thickness?: number;
-  /** only `"scan"` is handled here — an object-space Y travelling band, which
+  /** only `"scan"` is handled here - an object-space Y travelling band, which
    *  is the one thing a texture cannot do. the other three are opacity
    *  envelopes in the display pass and need nothing from the mesh. */
   mode?: "draw" | "hold" | "pulse" | "scan";
@@ -87,7 +87,7 @@ export interface MeshPointer {
  *  context is lost. */
 export interface MeshSkeletonHandle {
   /** bind this to the `uSkel` texture unit. Non-null from a successful
-   *  `create()` onward, and transparent until a mesh has loaded — so a mesh
+   *  `create()` onward, and transparent until a mesh has loaded - so a mesh
    *  that never arrives is invisible rather than a black stamp. */
   readonly texture: WebGLTexture | null;
   /** true once a mesh is parsed and uploaded. */

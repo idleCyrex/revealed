@@ -46,7 +46,7 @@ export const DEFAULT_WAVE: ResolvedWave = {
   resolution: 512,
 };
 
-/** The resolved brush defaults. `healRate` is always a number here — it is the
+/** The resolved brush defaults. `healRate` is always a number here - it is the
  *  resolved form of `trail`, and `persist` is exactly `healRate === 0`. */
 export const DEFAULT_BRUSH: ResolvedBrush = {
   radius: 0.3,
@@ -124,13 +124,13 @@ const PRESET_WAVE: Partial<Record<EdgePreset, boolean | WaveOptions>> = {
 };
 
 /* ------------------------------------------------------------------ *
- * resolved shapes — every optional filled in, colours pre-parsed
+ * resolved shapes - every optional filled in, colours pre-parsed
  * ------------------------------------------------------------------ */
 
 export type ResolvedEdge = Required<EdgeOptions>;
 
 export interface ResolvedWave {
-  /** true iff something still moves the field — the resolved twin of
+  /** true iff something still moves the field - the resolved twin of
    *  `advect > 0 || inject > 0`, the same way `persist` is of `healRate === 0` */
   enabled: boolean;
   advect: number;
@@ -144,9 +144,9 @@ export interface ResolvedWave {
 
 export interface ResolvedBrush {
   radius: number;
-  /** true iff nothing ever heals — the resolved twin of `healRate === 0` */
+  /** true iff nothing ever heals - the resolved twin of `healRate === 0` */
   persist: boolean;
-  /** true iff everything heals every frame — the resolved twin of
+  /** true iff everything heals every frame - the resolved twin of
    *  `healRate === Infinity`, and the other end of the same number */
   spotlight: boolean;
   trail: number;
@@ -160,7 +160,7 @@ export interface ResolvedSkeleton {
   /** null exactly when the skeleton is a mesh: there is no image to load */
   src: ImageSource | null;
   /** the caller's mesh handle, or null for an image skeleton. Never created
-   *  or destroyed here — the field only drives and binds it. */
+   *  or destroyed here - the field only drives and binds it. */
   mesh: MeshSkeletonHandle | null;
   /** 0..1 sRGB triple, ready for a vec3 uniform */
   color: [number, number, number];
@@ -362,8 +362,8 @@ function normalizeSkeleton(
   sk: RevealOptions["skeleton"]
 ): ResolvedSkeleton | null {
   if (!sk) return null;
-  /* `{ src }` is ambiguous — it is a valid ImageSource AND a valid
-     SkeletonOptions — but the two agree on what it means, so only the
+  /* `{ src }` is ambiguous - it is a valid ImageSource AND a valid
+     SkeletonOptions - but the two agree on what it means, so only the
      ImageSource-only keys have to discriminate */
   let o: SkeletonOptions;
   if (typeof sk === "string") o = { src: sk };
@@ -380,7 +380,7 @@ function normalizeSkeleton(
 
   /* the mesh branch comes first: a handle and an image are two answers to the
      same question, and the handle is the more specific one. `source` is not a
-     choice here — the mesh writes premultiplied black plus alpha, which is
+     choice here - the mesh writes premultiplied black plus alpha, which is
      exactly what the display pass's "alpha" branch reads and tints. */
   if (o.mesh) {
     if (o.src) {
@@ -398,7 +398,7 @@ function normalizeSkeleton(
   }
 
   if (!o.src) return null;
-  /* "scan" is a mesh-only animation — it lives in the model's object space and
+  /* "scan" is a mesh-only animation - it lives in the model's object space and
      there is no object space in a texture. Collapsed to its nearest image
      equivalent rather than rejected, so a shared config can carry it. */
   if (common.mode === "scan") common.mode = "hold";
@@ -414,8 +414,8 @@ function normalizeSkeleton(
  *  terms that move the field, and anything that leaves one of them positive is
  *  enabled. The same collapse `persist` gets from `healRate === 0`.
  *
- *  `spread` is the one genuinely dangerous number in here — it is the only term
- *  that ADDS to the reveal field — so it is resolved against the heal rate and
+ *  `spread` is the one genuinely dangerous number in here - it is the only term
+ *  that ADDS to the reveal field - so it is resolved against the heal rate and
  *  not against its own bounds: with `persist` (`healRate === 0`) nothing ever
  *  takes value back out, so a creep of any size would eventually reach every
  *  texel on the plate. It is forced to 0 there, and clamped under the heal rate
@@ -428,7 +428,7 @@ function normalizeWave(
   const o: WaveOptions = w && typeof w === "object" ? w : {};
   /* `spotlight` (healRate Infinity) turns the wave off outright rather than
      just muting `spread`: momentum that outlives the frame IS a trail, which is
-     the one thing that mode is defined by not having. Forced, not defaulted —
+     the one thing that mode is defined by not having. Forced, not defaulted -
      an explicit `wave` cannot bring it back, because it could not work. */
   const off = w === false || o.enabled === false || !isFinite(healRate);
   const advect = off ? 0 : Math.max(0, num(o.advect, DEFAULT_WAVE.advect));
@@ -456,7 +456,7 @@ function normalizeWave(
  *  `spotlight` are the two named ends of that one number: 0 (nothing ever
  *  heals) and Infinity (everything heals every frame, so the reveal is only
  *  where the pointer is now). The rate is what the loop actually uses, so all
- *  four are resolved down to it here and nothing downstream has to branch —
+ *  four are resolved down to it here and nothing downstream has to branch -
  *  `spotlight` needs no special case anywhere, because a decay of a whole mask
  *  unit per frame already falls out of the existing decay path. */
 function normalizeBrush(
@@ -466,7 +466,7 @@ function normalizeBrush(
   const trail = Math.max(0.05, num(b?.trail, DEFAULT_BRUSH.trail));
   /* Precedence, coarsest knob first: `persist` beats `spotlight` beats an
      explicit `healRate` beats `trail`. persist + spotlight is not a blend of
-     anything — they are opposite ends — so one has to win outright, and it is
+     anything - they are opposite ends - so one has to win outright, and it is
      the one that was there first and that the rest of the library already
      branches on. */
   let healRate: number;

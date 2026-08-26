@@ -427,7 +427,7 @@ export class RevealField {
       return;
     }
     if (!hardwareGL()) {
-      /* software GL would run this whole simulation on the CPU — the static
+      /* software GL would run this whole simulation on the CPU - the static
          plate is the better experience, but the consumer is told */
       this.fireReadyIfPlateLoaded();
       this.fireError("no hardware WebGL, using the static plate");
@@ -512,7 +512,7 @@ export class RevealField {
 
     /* before loadTextures, not after: the mesh's target is transparent from the
        moment it exists, and unit 4 must never be left holding an INCOMPLETE
-       texture — WebGL1 samples one as opaque BLACK, which would stamp the whole
+       texture - WebGL1 samples one as opaque BLACK, which would stamp the whole
        front plate dark. Synchronous, and it does not wait for the mesh itself. */
     this.syncMesh();
 
@@ -626,7 +626,7 @@ export class RevealField {
       gl.bindTexture(gl.TEXTURE_2D, this.texSkel);
     } else {
       /* an image skeleton may have just been swapped out for a mesh one, and
-         this is the call that dropped its texture — unit 4 is now stale */
+         this is the call that dropped its texture - unit 4 is now stale */
       this.syncMesh();
     }
 
@@ -698,7 +698,7 @@ export class RevealField {
     this.syncMaskSize();
     /* the mesh target follows the plate, and only its RATIO and its own cap
        matter. `resize` early-returns on an unchanged size, and the texture
-       OBJECT survives a re-spec, so unit 4 never needs rebinding for this —
+       OBJECT survives a re-spec, so unit 4 never needs rebinding for this -
        which is the whole reason it is safe to call every frame. */
     if (this.meshLive && w > 0 && h > 0) {
       this.o.skeleton?.mesh?.resize(w, h);
@@ -715,7 +715,7 @@ export class RevealField {
    *  after bring-up.
    *
    *  `create()` is both the first-time call and the context-restore call, and
-   *  it is the one place the handle's texture changes identity — so the bind
+   *  it is the one place the handle's texture changes identity - so the bind
    *  below sits immediately after it and nowhere else. */
   private syncMesh(): void {
     const want = this.o.skeleton?.mesh ?? null;
@@ -743,7 +743,7 @@ export class RevealField {
     /* `skeleton.mode`/`period` are the single source of truth: the display pass
        and the mesh's own scan band are two halves of one animation, and letting
        them disagree is exactly the "two animations fighting" failure. Pushed
-       only on change — setOptions marks the handle dirty, so doing it per frame
+       only on change - setOptions marks the handle dirty, so doing it per frame
        would force a redraw of a wireframe that had not moved. */
     const sk = this.o.skeleton!;
     const tuning = `${sk.mode}:${sk.period}`;
@@ -776,7 +776,7 @@ export class RevealField {
   /** The mask's own cap. With the wave on it is `brush.wave.resolution` rather
    *  than MASK_MAX: the pass is now six taps instead of one, several of them
    *  dependent, which is the worst shape there is for a tile-based integrated
-   *  GPU — and a coarser field is what MAKES the faceted tear, so the cheap
+   *  GPU - and a coarser field is what MAKES the faceted tear, so the cheap
    *  choice is also the better-looking one. Live through `setOptions`, at the
    *  same cost class as a resize, which is exactly what it is. */
   private syncMaskSize(): void {
@@ -999,7 +999,7 @@ export class RevealField {
   /* Idle strokes take their slots first: each owes exactly one capsule per
      frame and cannot be subsampled, whereas the pointer polyline can.
      Sampled even with the autopilot off, because the same call is what expires
-     a stale pointer report — with it skipped, a pointerleave that never fired
+     a stale pointer report - with it skipped, a pointerleave that never fired
      would pin the skeleton on for good. */
   private collectIdle(now: number): void {
     const r = this.o.brush.radius;
@@ -1030,7 +1030,7 @@ export class RevealField {
        with the rest of the trail. Fast attack / slow release so re-engaging
        after a pause is instant.
        `spotlight` is exempt: there is no trail for a held mark to fade into,
-       and the mode's contract is that the reveal is wherever the pointer IS —
+       and the mode's contract is that the reveal is wherever the pointer IS -
        which a still pointer still has. It goes out when the pointer leaves,
        not when it stops. */
     const moving =
@@ -1105,7 +1105,7 @@ export class RevealField {
     }
     /* the other end: `healRate: Infinity`, i.e. `brush.spotlight`. The whole
        mask is owed every frame and there is no fraction left to carry, which is
-       the limit of the arithmetic below rather than a different rule — but it
+       the limit of the arithmetic below rather than a different rule - but it
        has to be written down, because that arithmetic goes through 1/(rate*255)
        and would evaluate 0/0 on any frame with a zero delta (the first frame
        after a kick has exactly that) and poison the carried debt with a NaN. */
@@ -1178,7 +1178,7 @@ export class RevealField {
        flat-topped plateau with a shear wall around it, which tears the reveal
        apart in well under a second. INJECT_RATE sets what a second of
        full-strength contact is worth, so ~0.2 s of stroke arrives at about
-       0.8 — the top of the encodable range — and gets there along the brush's
+       0.8 - the top of the encodable range - and gets there along the brush's
        own profile instead of clipping to it. The clamp stops a 20 Hz hitch
        from throwing one enormous splat. */
     const inject = wave.enabled
@@ -1336,13 +1336,13 @@ export class RevealField {
     /* the carried fraction is denominated in the OLD step size, so a changed
        heal rate makes it meaningless: drop it and let the next frame start the
        window clean. Toggling `persist` is exactly this case, which is why it is
-       live — freezing and resuming touch no GL state at all. */
+       live - freezing and resuming touch no GL state at all. */
     if (o.brush.healRate !== before.brush.healRate) this.decayDebt = 0;
     /* turning the wave off must stop it NOW, not once the field would have
        damped out on its own; turning it on lets the next stroke arm it */
     if (!o.brush.wave.enabled) this.waveUntil = -1e9;
     /* every wave control is a uniform except the resolution, which reallocates
-       the pair — the same cost class as a resize, and handled by the same code.
+       the pair - the same cost class as a resize, and handled by the same code.
        Done here rather than left to the next frame so it lands on a paused,
        hidden or off-screen field too. */
     if (
@@ -1437,7 +1437,7 @@ export class RevealField {
     this.fillMask(0);
   }
 
-  /** Flood the mask — `back` fully visible. Fades back out over `brush.trail`
+  /** Flood the mask - `back` fully visible. Fades back out over `brush.trail`
    *  like any other stroke, unless `brush.persist` is on, where it stays. */
   revealAll(): void {
     this.fillMask(1);
@@ -1456,7 +1456,7 @@ export class RevealField {
     }
     this.rawFraction = value;
     this.smoothFraction = value;
-    /* the fraction is KNOWN the moment the mask is flooded — it does not have to
+    /* the fraction is KNOWN the moment the mask is flooded - it does not have to
        be measured back off the GPU. Publishing it here rather than waiting for
        the next reduction is what makes `progress` agree with the mask even when
        no frame runs between the call and the read: a paused field, a field that
@@ -1539,7 +1539,7 @@ export class RevealField {
     const gl = this.gl;
     this.glLive = false;
     this.ready = false;
-    /* the handle's GL objects go with the context either way — it watches the
+    /* the handle's GL objects go with the context either way - it watches the
        canvas for the loss itself, and its next `create()` allocates fresh ones.
        It is NOT destroyed here: the caller made it and the caller frees it, and
        a context restore has to find the parsed mesh still in memory. */

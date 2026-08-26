@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for taking the time to report a bug. Please fill in as much
-        of this as you can — a minimal repro is the single most useful
+        of this as you can - a minimal repro is the single most useful
         thing you can provide.
 
   - type: input

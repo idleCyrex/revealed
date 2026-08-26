@@ -56,12 +56,12 @@ export function createMaskPair(
 }
 
 /** Flood both halves of the pair with a constant mask value. Both, because
- *  either can be the one the next pass reads — which is what makes `clear()`
+ *  either can be the one the next pass reads - which is what makes `clear()`
  *  authoritative even with `brush.persist` on, where it is the only way back.
  *
  *  G and B go to 128/255, NOT 0: they hold a velocity biased so that 128 is
  *  zero. A pair flooded with 0 there reads as velocity (-1, -1) everywhere and
- *  the whole field leaves the plate at full speed on the first frame — which
+ *  the whole field leaves the plate at full speed on the first frame - which
  *  looks like a driver fault rather than a logic error, so it is worth being
  *  loud about. Every fill site goes through here for exactly that reason. */
 export const VEL_ZERO = 128 / 255;

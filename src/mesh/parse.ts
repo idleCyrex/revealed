@@ -5,7 +5,7 @@
    Getting from a real model to something this module can draw:
 
    1. Blender: File > Export > Wavefront (.obj). Turn ON "Triangulated Mesh",
-      turn OFF normals, UVs, materials — none of them are read and they triple
+      turn OFF normals, UVs, materials - none of them are read and they triple
       the file. Selection Only if the scene has more than the hero.
    2. Decimate first. Add a Decimate modifier and pull the ratio down until the
       face count lands in the budget below. A wireframe drawn at ~0.5 alpha with
@@ -19,8 +19,8 @@
    4. Run `node src/mesh/obj-to-edges.mjs model.obj model.json` to get the JSON
       edge list. Production sites should ship the JSON: it is smaller, it is
       already deduplicated and normalised, and it skips the OBJ parser
-      entirely (the parser is still in the bundle either way — it is ~90 lines
-      — but the CPU work at load is one JSON.parse).
+      entirely (the parser is still in the bundle either way - it is ~90 lines
+      - but the CPU work at load is one JSON.parse).
 
    Positions are normalised into a centred unit box on load, so exporter scale
    and origin do not matter. Y up is assumed for `mode: "scan"`, which travels
@@ -76,8 +76,8 @@ function normalize(p: Float32Array): void {
 }
 
 /** Deduplicating edge sink. A triangle soup expanded naively triples the line
- *  count — every interior edge belongs to two faces, and a fan repeats its
- *  hub — so this is the difference between 8k and 24k lines on the same model.
+ *  count - every interior edge belongs to two faces, and a fan repeats its
+ *  hub - so this is the difference between 8k and 24k lines on the same model.
  *  Key is `min * MAX_VERTICES + max`, which stays exact in a double. */
 class Edges {
   readonly out: number[] = [];
@@ -94,7 +94,7 @@ class Edges {
 }
 
 /** OBJ subset: `v`, `f`, `l`. Everything else (`vt`, `vn`, `g`, `o`, `s`,
- *  `usemtl`, `mtllib`, comments, blank lines) is skipped without inspection —
+ *  `usemtl`, `mtllib`, comments, blank lines) is skipped without inspection -
  *  `vn` in particular exists only so a normals-on export does not choke.
  *  Faces are fanned into a closed edge loop; `l` polylines stay open. Negative
  *  (relative) indices are honoured because Blender emits them for some
@@ -182,7 +182,7 @@ function finish(pos: number[], edges: number[], what: string): MeshData {
   if (nv < 2) fail(`${what}: no vertices`);
   if (nv > MAX_VERTICES)
     fail(
-      `${what}: ${nv} vertices exceeds the ${MAX_VERTICES} Uint16 index limit — decimate the model`
+      `${what}: ${nv} vertices exceeds the ${MAX_VERTICES} Uint16 index limit - decimate the model`
     );
   if (edges.length < 2) fail(`${what}: no edges`);
   const positions = new Float32Array(pos);

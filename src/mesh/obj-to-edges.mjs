@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* obj-to-edges — Wavefront OBJ to the JSON edge list `revealed/mesh` ships.
+/* obj-to-edges - Wavefront OBJ to the JSON edge list `revealed/mesh` ships.
  *
  *   node src/mesh/obj-to-edges.mjs helmet.obj helmet.json [--precision 4]
  *

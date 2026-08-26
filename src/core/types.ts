@@ -17,7 +17,7 @@ export interface EdgeOptions {
   /** fbm frequency of the carve. higher = finer lace. default 7.5 */
   scale?: number;
   /** how hard the noise chews the boundary, 0..1.5. 0 = smooth blob. default
-   *  0.38 — it was 0.62 before the wave, and `edge: "plain"` restores that */
+   *  0.38 - it was 0.62 before the wave, and `edge: "plain"` restores that */
   carve?: number;
   /** secondary, finer octave amount. default 0.28 */
   detail?: number;
@@ -25,7 +25,7 @@ export interface EdgeOptions {
   feather?: number;
   /** mask value the cut happens at. clamped to 0.01..0.99. default 0.18 */
   threshold?: number;
-  /** rim refraction strength in uv. 0 disables. default 0.008 — it was 0.012
+  /** rim refraction strength in uv. 0 disables. default 0.008 - it was 0.012
    *  before the wave, and `edge: "plain"` restores that */
   refraction?: number;
   /** how tightly refraction hugs the rim. default 55 */
@@ -48,7 +48,7 @@ export interface EdgeOptions {
 }
 
 /** Momentum. The mask carries a velocity field in its two spare channels: a
- *  stroke injects into it, and the reveal is then transported by it — so the
+ *  stroke injects into it, and the reveal is then transported by it - so the
  *  wave keeps travelling, and keeps tearing itself into islands, for about a
  *  second after the pointer stops. */
 export interface WaveOptions {
@@ -68,7 +68,7 @@ export interface WaveOptions {
    *  the wave stops sooner. default 0.16 */
   damping?: number;
   /** how fast the reveal creeps into its neighbours, in uv per second. bounded
-   *  by construction — the creep loses a fixed slice of mask value per texel
+   *  by construction - the creep loses a fixed slice of mask value per texel
    *  travelled, so it always runs out. forced to 0 under `persist`.
    *  default 0.12 */
   spread?: number;
@@ -84,7 +84,7 @@ export interface BrushOptions {
    *  `clear()` is called. `trail` is ignored while this is on. Default false. */
   persist?: boolean;
   /** No trail at all: the reveal is only where the pointer is this frame, and
-   *  closes immediately behind it — a torch, not a paint stroke. Exactly
+   *  closes immediately behind it - a torch, not a paint stroke. Exactly
    *  `healRate: Infinity`, the far end of the same number `persist` is the near
    *  end of. `trail` is ignored while this is on, and so is `wave`: a
    *  propagating wave IS a trail. Contradicts `persist`, which wins.
@@ -103,7 +103,7 @@ export interface BrushOptions {
   /** momentum: a stroke throws the reveal forward and it keeps travelling after
    *  the pointer stops. `false` is exactly `{ enabled: false }`. default true,
    *  or false when `edge` is the `"plain"` or `"clean"` preset, or when
-   *  `spotlight` is on — where a travelling wave would be a trail. */
+   *  `spotlight` is on - where a travelling wave would be a trail. */
   wave?: boolean | WaveOptions;
 }
 
@@ -119,7 +119,7 @@ export interface SkeletonOptions {
    *      new RevealField(el, { front, back, skeleton: { mesh } });
    *
    *  The handle's lifecycle is the CALLER's: you create it, you `destroy()`
-   *  it. The field only drives it — create / resize / update / render — and
+   *  it. The field only drives it - create / resize / update / render - and
    *  binds its texture where the image skeleton's would have gone, so `color`,
    *  `opacity`, `reactive`, `mode` and `period` all keep working on it.
    *  `source` is forced to `"alpha"`, which is what the mesh writes.
@@ -133,7 +133,7 @@ export interface SkeletonOptions {
   /** peak opacity. default 0.18 */
   opacity?: number;
   /** "draw" sketches a pen front top→bottom then fades; "hold" is constant;
-   *  "pulse" breathes; "scan" is mesh-only — a travelling band in the model's
+   *  "pulse" breathes; "scan" is mesh-only - a travelling band in the model's
    *  OWN object space, so it sweeps the geometry rather than the screen (with
    *  an image skeleton it is identical to "hold"). default "draw".
    *
@@ -154,7 +154,7 @@ export interface SkeletonOptions {
 
 export interface IdleOptions {
   /** autopilot strokes so the effect breathes with no pointer. default true, or
-   *  false when `brush.persist` is on — an autopilot that never heals would
+   *  false when `brush.persist` is on - an autopilot that never heals would
    *  uncover the whole image on its own. */
   enabled?: boolean;
   /** concurrent strokes, 1..4. default 2 */
@@ -188,7 +188,7 @@ export interface RevealOptions {
   /** called ~10x/s with `max(measured, progress)` of `measure` uncovered, and
    *  immediately after `clear()` / `revealAll()` even if no frame runs */
   onReveal?: (fraction: number) => void;
-  /** called once the plates are decoded and the first frame has painted — or,
+  /** called once the plates are decoded and the first frame has painted - or,
    *  where the effect is never going to run, once the front plate has decoded */
   onReady?: () => void;
   /** called when a degradation is taken and the static front plate is kept: no

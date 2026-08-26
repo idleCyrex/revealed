@@ -21,7 +21,7 @@ export default defineConfig([
   },
   // 2. React entry. `../index.js` stays external so the two entries share one
   //    module instance at runtime instead of the core being inlined twice.
-  //    NOTE: no `treeshake` here — tsup's tree-shaking step runs the bundle
+  //    NOTE: no `treeshake` here - tsup's tree-shaking step runs the bundle
   //    through Rollup, which strips module-level directives and would drop the
   //    "use client" banner this entry exists to carry.
   {
