@@ -5,7 +5,7 @@
 ![A scripted pointer sweep tears a photograph of a pigeon open along a wet, noise-carved edge, uncovering an X-ray of the same bird; the tear keeps travelling for about a second after the stroke stops, leaves islands of feather standing inside the uncovered ground, and then the photograph heals back over it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/hero.gif)
 
 Two pictures are stacked in the same box. Wherever the pointer moves, the top one is eaten
-away and the one underneath shows through — like wiping condensation off a window, except
+away and the one underneath shows through - like wiping condensation off a window, except
 the boundary is a fractal lace that bulges, drips and punches holes through itself. A
 stroke does not just paint where the pointer went: it throws the reveal forward, and the
 front keeps travelling and tearing for about a second after the pointer stops. Then it
@@ -26,12 +26,12 @@ like a static hero.
   1×1 reduction that reports how much has been uncovered. The wave rides in the mask's two
   spare channels: no extra render target, no extra program, no float textures.
 - **Degrades all the way down.** No WebGL, a software renderer, `prefers-reduced-motion`,
-  a lost context, a failed shader link, a 404 on a plate — every one of them leaves the
+  a lost context, a failed shader link, a 404 on a plate - every one of them leaves the
   plain front image, which was in the DOM the whole time.
 - **SSR-safe.** Importing it on the server touches nothing, and `revealed/react` ships its
   own `"use client"`.
 
-**See it working:** [revealed.idlee.xyz](https://revealed.idlee.xyz) — live demos, the six presets
+**See it working:** [revealed.idlee.xyz](https://revealed.idlee.xyz) - live demos, the six presets
 side by side, and a [playground](https://revealed.idlee.xyz/playground) wired to every
 option. Full [documentation](https://revealed.idlee.xyz/docs) and
 [API reference](https://revealed.idlee.xyz/docs/api) live there too.
@@ -84,14 +84,14 @@ const field = new RevealField(host, {
 field.destroy();
 ```
 
-The host needs a width. Everything else — height, position, the canvas, the plates — the
+The host needs a width. Everything else - height, position, the canvas, the plates - the
 field arranges itself.
 
 ## CDN
 
 The IIFE build puts a single global, `revealed`, on `window`. It contains the core only:
 `RevealField`, `isSupported`, `presets`, `DEFAULT_EDGE`, `DEFAULT_BRUSH`. There is no
-React in it, and no [mesh skeleton](#3d-wireframe-skeletons) — that one is ESM only, since
+React in it, and no [mesh skeleton](#3d-wireframe-skeletons) - that one is ESM only, since
 a wireframe hero is not a drop-a-script-tag feature.
 
 ```html
@@ -114,8 +114,8 @@ jsDelivr serves the same file from
 
 | layer | required | what it is |
 | --- | --- | --- |
-| `front` | yes | the image on top — the one that gets eaten away |
-| `back` | yes | the image underneath — the one that gets revealed |
+| `front` | yes | the image on top - the one that gets eaten away |
+| `back` | yes | the image underneath - the one that gets revealed |
 | `skeleton` | no | line art of `back`, ghosted onto `front` and sketched on in a loop, so the visitor can tell there is something hidden underneath. Either an image, or a [3D wireframe mesh](#3d-wireframe-skeletons) |
 
 ![The three layers side by side. front: a photograph of a beige CRT monitor showing a 1990s MapQuest page. back: a flat-panel monitor showing a modern cruise-line site. skeleton: white line art tracing the outline of the flat monitor and its stand.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/layers.png)
@@ -127,7 +127,7 @@ will look like it slid or stretched.
 ### Authoring a skeleton
 
 The skeleton is the part that makes people move their cursor. It is a faint outline of
-what is underneath, stamped onto the front layer *before* the reveal mix — so it is wiped
+what is underneath, stamped onto the front layer *before* the reveal mix - so it is wiped
 away exactly where `back` has already been uncovered, and lingers only on the parts still
 to be found.
 
@@ -160,12 +160,12 @@ out of the fragment shader, and no third texture is uploaded.
 
 ### 3D wireframe skeletons
 
-The skeleton can be a **rotating 3D wireframe** instead of a flat image — a hero object
+The skeleton can be a **rotating 3D wireframe** instead of a flat image - a hero object
 drawn as hairlines, parallaxing a few degrees with the pointer. It lives behind its own
 subpath so the core stays lean:
 
 ```bash
-# nothing to install — it ships in the same package
+# nothing to install - it ships in the same package
 ```
 
 ```tsx
@@ -204,12 +204,12 @@ mesh.destroy();
 **Lifecycle is yours.** `meshSkeleton()` returns a handle; the field brings it up on its
 context, resizes it with the plate, steps it with the pointer and draws it, and rebinds it
 after a context restore. It never calls `destroy()`. Create the handle once, keep it for as
-long as the field lives, and destroy it when you are done with it — destroying the field
+long as the field lives, and destroy it when you are done with it - destroying the field
 alone leaks nothing (the GL objects go with the context) but does leave the handle's
 media-query listener attached.
 
 **`src` and `mesh` are two answers to the same question.** Give one. If you give both,
-`mesh` wins and you get a development warning. `source` is forced to `"alpha"` with a mesh —
+`mesh` wins and you get a development warning. `source` is forced to `"alpha"` with a mesh -
 the wireframe writes premultiplied black plus alpha, which is exactly what the `"alpha"`
 path reads and tints with `color`.
 
@@ -220,7 +220,7 @@ single source of truth and is forwarded down to the handle. Setting `mode` on
 
 The mesh is fetched in the background and **never awaited**: `onReady` fires on the plates
 alone. A mesh that 404s, fails to parse, or blows the index limit calls the handle's
-`onError` and leaves a transparent skeleton — the reveal runs exactly as if you had not
+`onError` and leaves a transparent skeleton - the reveal runs exactly as if you had not
 asked for one.
 
 #### `mode: "scan"`
@@ -236,7 +236,7 @@ These go to `meshSkeleton()`, not to `skeleton`:
 
 | key | type | default | what it does |
 | --- | --- | --- | --- |
-| `mesh` | `string \| { positions, edges }` | — | url of a `.obj` or `.json` edge list, or arrays you already have. Required |
+| `mesh` | `string \| { positions, edges }` | - | url of a `.obj` or `.json` edge list, or arrays you already have. Required |
 | `meshParallax` | `number` | `5` | peak yaw in degrees at the far edge of the plate |
 | `meshDamping` | `number` | `0.03` | 0..1 approach per 60 Hz frame, frame-rate corrected |
 | `meshTilt` | `number` | `10` | constant pitch offset in degrees, suppressed under 768 px |
@@ -247,10 +247,10 @@ These go to `meshSkeleton()`, not to `skeleton`:
 | `meshAlpha` | `number` | `0.55` | alpha per line fragment, before `skeleton.opacity` scales the whole stamp. Overlapping edges accumulate |
 | `meshDepth` | `boolean` | `false` | attach a depth buffer so back edges are hidden. Off looks closer to a real wireframe |
 | `reducedMotion` | `boolean \| null` | `null` | override the media query. Reduced motion freezes the pose rather than removing the mesh |
-| `onError` | `(err) => void` | — | informational, never fatal |
+| `onError` | `(err) => void` | - | informational, never fatal |
 
 `mode` and `period` are also accepted here, but `skeleton.mode` / `skeleton.period` overwrite
-them — see above.
+them - see above.
 
 The handle exposes `texture`, `ready`, `edgeCount`, `dirty`, and `setOptions(patch)` for
 live changes. Everything is live except `mesh` (refetches) and `thickness` crossing 1
@@ -261,10 +261,10 @@ live changes. Everything is live except `mesh` (refetches) and `thickness` cross
 This is a **visual** limit, not a performance one. A wireframe drawn at half alpha with no
 depth test stops reading as a shape long before it costs you a frame:
 
-- **under ~1,500 edges** — reads as a wire cage, not a surface
-- **1,500–3,000 edges** — the usable band for a hero. Enough to see the form, sparse
+- **under ~1,500 edges** - reads as a wire cage, not a surface
+- **1,500–3,000 edges** - the usable band for a hero. Enough to see the form, sparse
   enough that individual lines stay individual
-- **above ~3,000** — the lines start to merge; by ~20,000 it is uniformly grey mush
+- **above ~3,000** - the lines start to merge; by ~20,000 it is uniformly grey mush
 
 So decimate hard. In Blender: add a Decimate modifier and pull the ratio down until the
 face count is in that band, export as OBJ with triangulation on and normals/UVs/materials
@@ -279,7 +279,7 @@ like a wireframe.
 #### Cost
 
 `revealed/mesh` is **~6.6 kB gzipped** (minified), and it is not in the core bundle,
-the React bundle, or the CDN `revealed.global.js` — those are byte-identical whether or not
+the React bundle, or the CDN `revealed.global.js` - those are byte-identical whether or not
 you use it. Import it and you pay for it; do not and you never see it. It imports nothing
 from the core, so it is a leaf in your graph. The pass itself is one draw call into a
 target capped at `meshResolution`, skipped entirely on any frame where the pose has not
@@ -295,29 +295,29 @@ never rebuilds the GL context.
 
 | prop | type | default | what it does |
 | --- | --- | --- | --- |
-| `front` | `ImageSource` | — | the plate on top |
-| `back` | `ImageSource` | — | the plate underneath |
-| `skeleton` | `ImageSource \| SkeletonOptions` | — | optional line-art hint |
+| `front` | `ImageSource` | - | the plate on top |
+| `back` | `ImageSource` | - | the plate underneath |
+| `skeleton` | `ImageSource \| SkeletonOptions` | - | optional line-art hint |
 | `aspect` | `number` | from `front` | width / height of the plates |
 | `edge` | `EdgePreset \| EdgeOptions` | `"liquid"` | how the boundary is carved |
-| `brush` | `BrushOptions` | — | size and lifetime of a stroke |
+| `brush` | `BrushOptions` | - | size and lifetime of a stroke |
 | `idle` | `boolean \| IdleOptions` | `true` | the autopilot |
 | `maxDpr` | `number` | `1.5` | cap on `devicePixelRatio`, floored at `0.5` |
 | `running` | `boolean` | `true` | `false` parks the render loop |
 | `progress` | `number` | `0` | 0..1 forced reveal floor, clamped |
 | `measure` | `UvRect` | whole image | uv rect `onReveal` is measured over |
-| `onReveal` | `(fraction: number) => void` | — | called ~10×/s with 0..1 uncovered |
-| `onReady` | `() => void` | — | plates decoded, first frame painted |
-| `onError` | `(err: Error) => void` | — | a degradation was taken; see below |
+| `onReveal` | `(fraction: number) => void` | - | called ~10×/s with 0..1 uncovered |
+| `onReady` | `() => void` | - | plates decoded, first frame painted |
+| `onError` | `(err: Error) => void` | - | a degradation was taken; see below |
 | `pointerTarget` | `HTMLElement \| null` | the host | element the pointer is tracked on |
 | `deferInit` | `boolean` | `true` | bring GL up at `requestIdleCallback` |
 
 `onReveal` reports `max(measured, progress)`, so a scroll-driven reveal moves it too. It
 also fires immediately after `clear()` and `revealAll()`, even if no frame runs in between
-— a paused, hidden or off-screen field still reports the truth.
+- a paused, hidden or off-screen field still reports the truth.
 
-The fraction still means the same thing it always did — the share of `measure` that is
-uncovered, read off the mask — but with the wave on it **breathes**: it rises while a
+The fraction still means the same thing it always did - the share of `measure` that is
+uncovered, read off the mask - but with the wave on it **breathes**: it rises while a
 stroke is travelling and falls back as the reveal heals, so it is not a one-way ratchet.
 It never was under a healing brush, but the wave makes it obvious. If you are latching on
 `fraction >= x`, latch it yourself; do not assume it only rises. Under `persist` it is
@@ -363,20 +363,20 @@ breakpoint re-uploads the textures on its own.
 
 `bubble` is what leaves islands of `front` standing inside uncovered ground, and specks
 detached from the main stroke. It is gated on the mask's own health, so a `progress`-driven
-reveal stays clean — the holes only appear where a stroke put them.
+reveal stays clean - the holes only appear where a stroke put them.
 
 **`carve` and `refraction` moved in this release** (`0.62 → 0.38` and `0.012 → 0.008`). The
 wave and the bubbles now supply most of the character, so the old carve double-counted it
 and the old rim fringe fought the torn boundary. `edge: "plain"` puts both back and turns
-the wave off — see [Presets](#presets).
+the wave off - see [Presets](#presets).
 
 ### `BrushOptions`
 
 | key | type | default | what it does |
 | --- | --- | --- | --- |
 | `radius` | `number` | `0.3` | radius in aspect-corrected units (1 = image height) |
-| `persist` | `boolean` | `false` | painted area never fades — what is uncovered stays uncovered until `clear()`. Ignores `trail` |
-| `spotlight` | `boolean` | `false` | no trail at all — the reveal is only where the pointer is right now, and closes immediately behind it. Ignores `trail`, and forces `wave` off |
+| `persist` | `boolean` | `false` | painted area never fades - what is uncovered stays uncovered until `clear()`. Ignores `trail` |
+| `spotlight` | `boolean` | `false` | no trail at all - the reveal is only where the pointer is right now, and closes immediately behind it. Ignores `trail`, and forces `wave` off |
 | `trail` | `number` | `2.8` | with `persist` and `spotlight` off, seconds a stroke stays before it has fully faded |
 | `healRate` | `number` | `1 / trail` | how fast the mask heals, in mask units per second. `persist: true` is exactly `healRate: 0`; `spotlight: true` is exactly `healRate: Infinity` |
 | `holdTimeout` | `number` | `130` | ms of pointer stillness after which painting stops. Ignored under `spotlight` |
@@ -384,7 +384,7 @@ the wave off — see [Presets](#presets).
 
 `trail`, `healRate`, `persist` and `spotlight` are four views of one number. `trail` is a
 duration, `healRate` is its reciprocal, and `persist` and `spotlight` are the two ends of
-it — `healRate: 0`, nothing ever heals, and `healRate: Infinity`, everything heals every
+it - `healRate: 0`, nothing ever heals, and `healRate: Infinity`, everything heals every
 frame. Set whichever reads best.
 
 Precedence, coarsest first: **`persist` beats `spotlight` beats an explicit `healRate`
@@ -395,7 +395,7 @@ rather than a blend: `persist` wins and a development-build warning says so.
 
 `brush.wave` is `true` by default, `false` is exactly `{ enabled: false }`, and an object
 tunes it. Everything here is a uniform and takes effect on the next frame through
-`setOptions()` — except `resolution`, which reallocates the mask, at the same cost as a
+`setOptions()` - except `resolution`, which reallocates the mask, at the same cost as a
 resize.
 
 | key | type | default | what it does |
@@ -409,7 +409,7 @@ resize.
 | `resolution` | `number` | `512` | cap on the mask's long edge while the wave is on. Lower = more faceted, and cheaper |
 
 How it works: the mask's two spare channels carry a velocity field. A stroke injects into
-it — forward along the stroke, and rotating in opposite directions on either side of it —
+it - forward along the stroke, and rotating in opposite directions on either side of it -
 and every frame the reveal is dilated along that field while the field itself is
 transported and damped. Nothing else is added: no second render target, no extra program,
 no float textures.
@@ -433,13 +433,13 @@ tear its faceted character.
 
 | key | type | default | what it does |
 | --- | --- | --- | --- |
-| `src` | `ImageSource` | — | the line art. One of `src` or `mesh` is required |
-| `mesh` | `MeshSkeletonHandle` | — | a 3D wireframe from [`revealed/mesh`](#3d-wireframe-skeletons) instead of an image. Wins over `src`; forces `source: "alpha"`. You own its lifecycle |
+| `src` | `ImageSource` | - | the line art. One of `src` or `mesh` is required |
+| `mesh` | `MeshSkeletonHandle` | - | a 3D wireframe from [`revealed/mesh`](#3d-wireframe-skeletons) instead of an image. Wins over `src`; forces `source: "alpha"`. You own its lifecycle |
 | `color` | `string` | `"#18375d"` | any CSS colour the art is tinted to. Ignored by `source: "image"` |
 | `opacity` | `number` | `0.18` | peak opacity |
-| `mode` | `"draw" \| "hold" \| "pulse" \| "scan"` | `"draw"` | `"draw"` sketches a pen front top→bottom then fades; `"hold"` is constant; `"pulse"` breathes; `"scan"` is mesh-only — a band travelling along the model's own object-space Y (on an image it collapses to `"hold"`) |
+| `mode` | `"draw" \| "hold" \| "pulse" \| "scan"` | `"draw"` | `"draw"` sketches a pen front top→bottom then fades; `"hold"` is constant; `"pulse"` breathes; `"scan"` is mesh-only - a band travelling along the model's own object-space Y (on an image it collapses to `"hold"`) |
 | `period` | `number` | `5.4` | seconds for one draw-on / hold / fade / scan cycle |
-| `source` | `"alpha" \| "luma" \| "image"` | `"alpha"` | how the image becomes coverage. Ignored — and forced to `"alpha"` — with a mesh |
+| `source` | `"alpha" \| "luma" \| "image"` | `"alpha"` | how the image becomes coverage. Ignored - and forced to `"alpha"` - with a mesh |
 | `reactive` | `boolean` | `true` | raise coverage while strokes are passing; on a still, untouched field the ghost drops to about a ninth of `opacity` |
 
 `source` and `mode` are the only two options in the whole library that are baked into the
@@ -461,7 +461,7 @@ Pass `idle: false` to switch the autopilot off, `idle: true` to force it on, or 
 | `region` | `UvRect` | whole image | uv rect the strokes aim through |
 | `yieldAfter` | `number` | `900` | ms of pointer inactivity before the autopilot starts spawning again |
 
-Strokes already in flight always finish — the autopilot never cuts one off mid-sweep — and
+Strokes already in flight always finish - the autopilot never cuts one off mid-sweep - and
 it only starts a new one once the pointer has been quiet for `yieldAfter`.
 
 ### `UvRect`
@@ -483,18 +483,18 @@ export function Dissolving() {
 
 | preset | feel | overrides | wave |
 | --- | --- | --- | --- |
-| `liquid` | wet, torn, travelling — the default look | *(the defaults)* | on |
+| `liquid` | wet, torn, travelling - the default look | *(the defaults)* | on |
 | `plain` | **everything the library did before the wave** | `carve: 0.62, refraction: 0.012, bubble: 0, facet: 0` | off |
 | `dissolve` | fine grain, crumbling edge, most holes | `scale: 22, carve: 0.5, detail: 0.4, feather: 0.008, bubble: 0.8, bubbleScale: 4` | on |
 | `ink` | slow, heavy, curling blot | `scale: 4, carve: 0.8, detail: 0.15, speed: 0.4, refraction: 0.02` | `swirl: 0.7, damping: 0.35` |
 | `shatter` | sharp angular tears, low-poly edge | `scale: 12, carve: 1.1, detail: 0.05, feather: 0.004, refraction: 0, bubble: 0.3, facet: 1` | on |
 | `clean` | no noise, no holes, plain soft circle | `carve: 0, detail: 0, feather: 0.02, refraction: 0, bubble: 0, facet: 0` | off |
 
-![The same stroke on the same frame, rendered six times — edge="liquid", "plain", "dissolve", "ink", "shatter" and "clean" — each labelled, so the carved boundary can be compared from a torn lace, through a quiet curve, to a fine speckled crumble.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/presets.png)
+![The same stroke on the same frame, rendered six times - edge="liquid", "plain", "dissolve", "ink", "shatter" and "clean" - each labelled, so the carved boundary can be compared from a torn lace, through a quiet curve, to a fine speckled crumble.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/presets.png)
 
 ### Getting the old look back
 
-`edge: "plain"` is the pre-wave library in one word — the old `carve` and `refraction`, no
+`edge: "plain"` is the pre-wave library in one word - the old `carve` and `refraction`, no
 bubbles, no faceting, and no momentum:
 
 ```tsx
@@ -505,7 +505,7 @@ Anything narrower is a normal override. `brush={{ wave: false }}` kills only the
 and keeps the bubbles; `edge={{ bubble: 0 }}` kills only the bubbles and keeps the
 momentum.
 
-A preset is an `EdgeOptions` patch over the defaults, plus — for the named presets only —
+A preset is an `EdgeOptions` patch over the defaults, plus - for the named presets only -
 an implied `brush.wave`. An explicit `brush.wave` always wins over the preset's, and an
 `edge` given as an object never carries a preset wave, because there is no preset to carry
 one from. Start from a preset and override:
@@ -570,7 +570,7 @@ uncovers itself over a minute or two.
 
 `persist` is live: flip it through `setOptions()` and whatever is painted right now freezes
 in place; flip it back and the mask resumes fading from exactly where it is. For a slow,
-permanent-*ish* fade rather than a hard freeze, set a low `healRate` instead —
+permanent-*ish* fade rather than a hard freeze, set a low `healRate` instead -
 `brush: { healRate: 0.01 }` takes about a hundred seconds to heal.
 
 The wave still works under `persist`, and still terminates: `wave.spread` is forced to `0`
@@ -583,7 +583,7 @@ where it threw the reveal, and that is final until `clear()`.
 
 `brush.spotlight` is the other end of the same number `persist` is one end of. Where
 `persist` is `healRate: 0` and nothing ever heals, `spotlight` is `healRate: Infinity` and
-*everything* heals every frame — so the reveal is only ever exactly where the pointer is
+*everything* heals every frame - so the reveal is only ever exactly where the pointer is
 right now, and closes immediately behind it.
 
 ![Two copies of the same tree painted with the same stroke. On the left the default brush leaves a trail of bare winter branches that heals over behind the pointer. On the right, brush.spotlight keeps the reveal only under the pointer, closing immediately behind it.](https://raw.githubusercontent.com/idleCyrex/revealed/main/media/spotlight.gif)
@@ -612,12 +612,12 @@ Things worth knowing:
 - **A still pointer keeps the light on.** `holdTimeout` is ignored here: with no trail for
   a held mark to fade into, "where the pointer is" is still a place. The light goes out
   when the pointer *leaves*, not when it stops.
-- **The autopilot still works** and is still on by default — it moves a virtual cursor, and
+- **The autopilot still works** and is still on by default - it moves a virtual cursor, and
   the light follows it, which is exactly what you want for a self-demonstrating hero. That
   is the opposite of the `persist` case, where idle defaults off because it would uncover
   the whole picture.
 - **`onReveal` reports the footprint of the light**, which is small and near-constant while
-  the pointer is down and `0` when it is not. That is the truth, not a bug — there is
+  the pointer is down and `0` when it is not. That is the truth, not a bug - there is
   nothing accumulated to measure. Use `progress` if you need a number that climbs.
 - `clear()` and `revealAll()` still work; `revealAll()` shows everything for exactly one
   frame before the next one heals it away.
@@ -770,11 +770,11 @@ class RevealField {
 
   /** merge new options; image sources reload plates, everything else is live */
   setOptions(next: Partial<RevealOptions>): void;
-  /** paint at a point in 0..1 uv of the plate — calls <200ms apart join into one stroke */
+  /** paint at a point in 0..1 uv of the plate - calls <200ms apart join into one stroke */
   paint(x: number, y: number, strength?: number): void;
-  /** wipe the mask back to fully covered — the only way back under `brush.persist` */
+  /** wipe the mask back to fully covered - the only way back under `brush.persist` */
   clear(): void;
-  /** flood the mask — `back` fully visible. Then decays over `brush.trail` like any
+  /** flood the mask - `back` fully visible. Then decays over `brush.trail` like any
    *  other stroke, unless `brush.persist` is on, where it stays */
   revealAll(): void;
   /** restart the render loop after `pause()` or `running: false` */
@@ -803,20 +803,20 @@ const willAnimate = isSupported();
 ```
 
 `true` when a hardware WebGL context is available and the visitor has not asked for reduced
-motion. False on the server. You rarely need it — the field falls back on its own — but it
+motion. False on the server. You rarely need it - the field falls back on its own - but it
 is there if you want to skip preloading the second plate.
 
 ### `presets`, `DEFAULT_EDGE`, `DEFAULT_BRUSH`, `DEFAULT_WAVE`
 
 `presets` is a `Record<EdgePreset, EdgeOptions>` of the six looks above, each a sparse
 patch over the defaults. `DEFAULT_EDGE` is the full `Required<EdgeOptions>` those patches
-land on. `DEFAULT_BRUSH` is the resolved brush — `radius`, `persist`, `spotlight`, `trail`,
-`healRate`, `holdTimeout` and `wave` — with `healRate` already derived from `trail`. `DEFAULT_WAVE` is
+land on. `DEFAULT_BRUSH` is the resolved brush - `radius`, `persist`, `spotlight`, `trail`,
+`healRate`, `holdTimeout` and `wave` - with `healRate` already derived from `trail`. `DEFAULT_WAVE` is
 the resolved wave on its own. Their types are exported as `ResolvedBrush` and
 `ResolvedWave`.
 
 Note that `presets` carries only the *edge* half of a preset. The wave a named preset
-implies is not part of it, because the wave is a brush option — spreading `presets.plain`
+implies is not part of it, because the wave is a brush option - spreading `presets.plain`
 into an `edge` object gives you its carve, not its lack of momentum.
 
 ```ts
@@ -844,7 +844,7 @@ import {
 | --- | --- | --- |
 | `className` | `string` | on the host element |
 | `style` | `CSSProperties` | on the host element |
-| `fallback` | `ReactNode` | rendered until the field mounts — i.e. on the server and during the first client render |
+| `fallback` | `ReactNode` | rendered until the field mounts - i.e. on the server and during the first client render |
 | `children` | `ReactNode` | rendered in an absolutely positioned layer over the canvas |
 | `ref` | `Ref<RevealHandle>` | `paint`, `clear`, `revealAll`, `play`, `pause`, and `field` |
 
@@ -875,13 +875,13 @@ export function Custom() {
 ```
 
 Both are built so the field is constructed **once**, keyed only on the image sources.
-Every other prop is forwarded through `setOptions`, and callbacks live in a ref — so an
+Every other prop is forwarded through `setOptions`, and callbacks live in a ref - so an
 inline `onReveal={(f) => setYear(f)}` will never tear down the GL context.
 
-Only three things rebuild the field: `front`, `back`, and the skeleton's **image** — that
+Only three things rebuild the field: `front`, `back`, and the skeleton's **image** - that
 is `skeleton` when you pass a string, or `skeleton.src` when you pass an object (adding or
-removing the skeleton counts as an image change). Every other key of `SkeletonOptions` —
-`color`, `opacity`, `mode`, `period`, `source`, `reactive` — is live, exactly as it is
+removing the skeleton counts as an image change). Every other key of `SkeletonOptions` -
+`color`, `opacity`, `mode`, `period`, `source`, `reactive` - is live, exactly as it is
 through `setOptions()`. Retinting the line art when a theme toggle flips is a uniform
 change on the next frame, not a remount:
 
@@ -894,7 +894,7 @@ change on the next frame, not a remount:
 ```
 
 Object props are compared by **value**, not by identity, so writing `edge={{ … }}` or
-`skeleton={{ … }}` inline — a fresh object on every render — pushes an update only when
+`skeleton={{ … }}` inline - a fresh object on every render - pushes an update only when
 something inside it actually changed.
 
 ### SSR and Next.js
@@ -904,7 +904,7 @@ a Next.js App Router server component. No `dynamic()`, no `ssr: false`.
 
 The server render is the host `<div>` plus `fallback`; the canvas and the plates are
 injected after hydration. The core entry carries no directive, so importing `revealed` in
-shared code does not drag a bundler into a client boundary — and importing it on the server
+shared code does not drag a bundler into a client boundary - and importing it on the server
 touches no browser global.
 
 ---
@@ -914,7 +914,7 @@ touches no browser global.
 | situation | what the field does |
 | --- | --- |
 | no WebGL, or context creation fails | keeps the static front plate; `onError("revealed: could not create a WebGL context")` |
-| software renderer (SwiftShader, llvmpipe, a blocklisted GPU) | never attempts GL — the CPU cost of this shader is not worth it; `onError("revealed: no hardware WebGL, using the static plate")` |
+| software renderer (SwiftShader, llvmpipe, a blocklisted GPU) | never attempts GL - the CPU cost of this shader is not worth it; `onError("revealed: no hardware WebGL, using the static plate")` |
 | `prefers-reduced-motion: reduce` | never brings GL up, and this is **not** an error, so `onError` does not fire. Re-checked live: turning the preference on tears the effect down mid-session, turning it off brings it back, no reload |
 | tab hidden | the rAF loop stops. On return the frame clock is re-stamped, so the trail cannot jump forward by however long you were away |
 | element scrolled off screen | an `IntersectionObserver` (threshold 0.01) stops the loop; the canvas holds its last frame and resumes where it left off |
@@ -930,17 +930,17 @@ In every one of those cases `onReady` still fires once the front plate has decod
 
 - Injects the two `<img>` plates and the `<canvas>` as the host's **first** children, so
   anything you render into the host (React `children`, a caption, a button) stays on top.
-  The back plate is loaded but hidden — only GL ever shows it.
+  The back plate is loaded but hidden - only GL ever shows it.
 - Sets `position: relative` on the host if it computes to `static`, and claims its
   `aspect-ratio` only if your CSS has not already set one.
 - Adds the class `revealed--gl` to the host while the canvas is the thing on screen, and
   removes it whenever the field falls back to the plate. Useful for styling an overlay
   that should only appear over the live effect.
 - Sets `touch-action: pan-y` on the pointer target, but only if the page has not set one
-  itself — vertical pans keep scrolling the page, sideways movement paints.
+  itself - vertical pans keep scrolling the page, sideways movement paints.
 - `ResizeObserver` on the host. A resize mid-stroke resamples the old mask into the new
   one, so the trail does not flash away.
-- Caps `devicePixelRatio` at 1.5 by default — the display pass runs two 5-octave fbm
+- Caps `devicePixelRatio` at 1.5 by default - the display pass runs two 5-octave fbm
   evaluations per pixel, and the extra resolution buys nothing on an effect this soft.
 - `destroy()` frees every texture, framebuffer, program, buffer, observer, listener and
   animation frame, calls `WEBGL_lose_context`, removes the injected nodes and puts the
@@ -958,19 +958,19 @@ owns the meaning.**
   position, a keyboard handler or a timer.
 - `prefers-reduced-motion: reduce` skips WebGL entirely and leaves the static front plate,
   re-checked live.
-- Touch works — a stroke lives from finger-down to finger-up — and the page still scrolls.
+- Touch works - a stroke lives from finger-down to finger-up - and the page still scrolls.
 
 ## Browser support
 
 Any browser with WebGL 1: Chrome, Edge, Firefox, Safari 15+, and their mobile counterparts.
-Everything uses core WebGL 1 — no extensions, no float textures, no derivatives — with a
+Everything uses core WebGL 1 - no extensions, no float textures, no derivatives - with a
 hardware context required (`failIfMajorPerformanceCaveat`, plus a renderer-string check for
 software rasterizers that slip past it).
 
 ## Troubleshooting
 
 **Nothing shows up at all.** The host needs a width. The field takes an aspect ratio but
-never a width, and a host with zero client width or height is skipped entirely — it will
+never a width, and a host with zero client width or height is skipped entirely - it will
 start the moment layout gives it a box.
 
 **The plates look stretched.** They are `object-fit: fill`. Either give `front` and `back`
@@ -989,7 +989,7 @@ not send `Access-Control-Allow-Origin`. Cross-origin plates are requested with
 `crossOrigin="anonymous"` because a tainted texture would poison the whole context.
 
 **The reveal heals when I asked for permanent.** `healRate` beats `trail`, and `persist`
-beats both — check you are not setting an explicit `healRate` alongside `persist: false`.
+beats both - check you are not setting an explicit `healRate` alongside `persist: false`.
 
 **`spotlight` does nothing.** `persist` beats it. They are opposite ends of `healRate`, so
 only one can apply; drop `persist`. A development build says so in the console.
@@ -1006,14 +1006,14 @@ remember the reported value is `max(measured, progress)`.
 sits near a ninth of that on a still field and rises as strokes pass. Black-on-white art
 needs `source: "luma"`; transparent art needs `source: "alpha"` (the default).
 
-**The mesh skeleton never appears.** Check the handle's `onError` first — the fetch is
+**The mesh skeleton never appears.** Check the handle's `onError` first - the fetch is
 deliberately never awaited, so a 404 or a parse failure is silent apart from that callback,
 and leaves a transparent skeleton rather than a black stamp. If `handle.ready` is `true` and
 `handle.edgeCount` is sane, it is the same visibility story as above: raise
 `skeleton.opacity`, or `meshAlpha` on the handle.
 
 **The mesh skeleton is grey mush.** Too many edges. A wireframe at half alpha with no depth
-test stops reading as a shape somewhere above ~3,000 edges — decimate to 1,500–3,000. This
+test stops reading as a shape somewhere above ~3,000 edges - decimate to 1,500–3,000. This
 is a visual limit, not a performance one.
 
 **`mode: "scan"` behaves like `"hold"`.** Either the skeleton is an image (`"scan"` is
@@ -1028,7 +1028,7 @@ it is on by default. `brush={{ wave: false }}` turns it off; `edge="plain"` turn
 whole new look at once.
 
 **The edge has holes in it that were not there before.** That is `edge.bubble`, also on by
-default — it is what leaves islands of the front plate standing inside the uncovered area.
+default - it is what leaves islands of the front plate standing inside the uncovered area.
 `edge={{ bubble: 0 }}` removes them and keeps everything else.
 
 **The boundary went blockier.** With the wave on the mask runs at 512 rather than 1024, and
@@ -1040,7 +1040,7 @@ drop `facet` to `0`.
 
 ## Contributing
 
-Issues and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for how to
+Issues and pull requests are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) for how to
 run the build and what the project will not accept (chiefly: it stays at zero runtime
 dependencies). Bugs go to
 [GitHub issues](https://github.com/idleCyrex/revealed/issues); a reproduction matters more

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.1
+
+### Changed
+
+- README now carries the media it always needed: an animated capture of a
+  stroke tearing the plate open and the wave carrying on after it stops, a
+  second capture contrasting `spotlight`, a plate of the three layers, and a
+  strip of the six presets at the same stroke position. Nothing about the
+  library changed - 0.1.0 shipped without the images only because they did
+  not exist yet, and an npm README cannot be updated without a release.
+- Licence attributed to idlee.xyz.
+- Em dashes replaced with spaced hyphens throughout the source and docs.
+
 ## 0.1.0 - Initial release
 
 ### Added
@@ -23,7 +36,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   gradient-driven rim refraction, tunable via `EdgeOptions` (`scale`,
   `carve`, `detail`, `feather`, `threshold`, `refraction`,
   `refractionFalloff`, `speed`).
-- Five edge presets: `liquid`, `dissolve`, `ink`, `shatter`, `clean`.
+- Six edge presets: `liquid` (the default), `dissolve`, `ink`, `shatter`,
+  `clean`, and `plain` for the quieter pre-wave look.
+- A self-propagating wave. Velocity rides in the mask texture's two spare
+  channels, so a stroke keeps spreading and tearing for about a second after
+  the pointer stops, at no cost in render targets or programs
+  (`BrushOptions.wave`, `WaveOptions`).
+- Bubble character on the boundary: `EdgeOptions.bubble`, `bubbleScale` and
+  `facet` leave islands of the front plate standing inside the uncovered area
+  and detached specks outside it.
+- `spotlight`: no trail at all, the reveal is only where the pointer is and
+  closes immediately behind it. Reveal lifetime is one number seen three
+  ways - `persist` is a heal rate of zero, `spotlight` is infinity, `trail`
+  is everything between.
+- Optional 3D wireframe skeletons behind the `revealed/mesh` subpath: a
+  minimal OBJ subset and JSON edge-list parser, a hand-written matrix stack,
+  pointer parallax, and a `"scan"` mode. Kept out of the core bundle, which
+  never grows for anyone who does not import it.
 - Capsule-brush pointer painting with configurable `radius`, fade `trail`,
   and stillness `holdTimeout`, plus a programmatic `paint(x, y, strength?)`
   API in plate uv space.

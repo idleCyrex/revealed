@@ -1,6 +1,6 @@
 {
   "name": "revealed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Paint one image out of another. A wet-edge WebGL reveal for React and plain JS.",
   "license": "MIT",
   "author": "Alex",
