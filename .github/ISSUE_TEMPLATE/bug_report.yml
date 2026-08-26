@@ -1,0 +1,78 @@
+name: Bug report
+description: Something in revealed isn't working as expected.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill in as much
+        of this as you can — a minimal repro is the single most useful
+        thing you can provide.
+
+  - type: input
+    id: version
+    attributes:
+      label: revealed version
+      description: The version of the `revealed` package you're using.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: entry-point
+    attributes:
+      label: Entry point
+      options:
+        - "revealed (vanilla)"
+        - "revealed/react"
+        - "CDN / IIFE global"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: >
+        A minimal repro link (StackBlitz/CodeSandbox/repo) or a code
+        snippet showing your RevealOptions / <Revealed /> props.
+      render: tsx
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device, and anything relevant about your build setup (bundler, framework/version, SSR or not).
+      placeholder: |
+        Browser: Chrome 128
+        OS: Windows 11
+        Framework: Next.js 16
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output / errors
+      description: Any errors from onError, the browser console, or the terminal.
+      render: shell
+    validations:
+      required: false

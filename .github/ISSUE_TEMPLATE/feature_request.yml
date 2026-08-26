@@ -1,0 +1,55 @@
+name: Feature request
+description: Suggest an addition or change to revealed.
+title: "[feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion. Note that `packages/revealed` must stay
+        at zero runtime dependencies — requests that require adding one are
+        unlikely to be accepted as-is, but the underlying need is still
+        worth describing.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: What are you unable to do today with revealed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: >
+        What you'd like to see — a new option, a new preset, a new API
+        method, docs, etc. Sketch the shape of it if you can (e.g. a new
+        field on EdgeOptions/BrushOptions/SkeletonOptions/IdleOptions).
+      render: ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds you're using today, or other approaches you considered.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - "Core (RevealField / vanilla)"
+        - "React (<Revealed /> / useRevealed)"
+        - "Shaders / rendering"
+        - "Presets"
+        - "Docs site"
+        - "Other"
+    validations:
+      required: false

@@ -1,0 +1,100 @@
+{
+  "name": "revealed",
+  "version": "0.1.0",
+  "description": "Paint one image out of another. A wet-edge WebGL reveal for React and plain JS.",
+  "license": "MIT",
+  "author": "Alex",
+  "homepage": "https://revealed.idlee.xyz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idleCyrex/revealed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/idleCyrex/revealed/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src/mesh/obj-to-edges.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/revealed.global.js",
+  "jsdelivr": "./dist/revealed.global.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./dist/react/index.d.ts",
+        "default": "./dist/react/index.js"
+      },
+      "require": {
+        "types": "./dist/react/index.d.cts",
+        "default": "./dist/react/index.cjs"
+      }
+    },
+    "./mesh": {
+      "import": {
+        "types": "./dist/mesh/index.d.ts",
+        "default": "./dist/mesh/index.js"
+      },
+      "require": {
+        "types": "./dist/mesh/index.d.cts",
+        "default": "./dist/mesh/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "rebuild": "node scripts/clean.mjs && tsup",
+    "prepack": "node scripts/clean.mjs && tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "webgl",
+    "reveal",
+    "hover",
+    "image",
+    "react",
+    "shader",
+    "mask",
+    "hero",
+    "interactive",
+    "animation"
+  ]
+}

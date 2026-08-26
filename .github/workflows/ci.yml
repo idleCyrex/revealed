@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      # The three tsup configs build concurrently; make sure every entry point
+      # the `exports` map promises actually landed.
+      - name: Check published entry points
+        run: |
+          for f in dist/index.js dist/index.cjs dist/index.d.ts \
+                   dist/react/index.js dist/react/index.d.ts \
+                   dist/mesh/index.js dist/mesh/index.d.ts \
+                   dist/revealed.global.js; do
+            test -f "$f" || { echo "missing $f"; exit 1; }
+          done
+      # `revealed/react` is a client boundary; the core deliberately is not.
+      - name: Check "use client" placement
+        run: |
+          head -1 dist/react/index.js | grep -q 'use client' || { echo 'react entry lost its "use client"'; exit 1; }
+          ! grep -q 'use client' dist/index.js || { echo 'core entry gained a "use client"'; exit 1; }
